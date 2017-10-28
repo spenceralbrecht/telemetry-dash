@@ -1,5 +1,6 @@
 #main.py
 from gevent import monkey
+from random import *
 monkey.patch_all()
 
 import time
@@ -19,7 +20,7 @@ def background_stuff():
      while True:
          time.sleep(1)
          print("sleeping")
-         t = str(time.clock())
+         t = str(randint(1,100))
          socketio.emit('message', {'data': 'This is data', 'time': t}, namespace='/test')
 
 @app.route('/')
