@@ -71,8 +71,8 @@ function initialize() {
 
     //Like D3 and jQuery, vizuly uses a function chaining syntax to set component properties
     //Here we set some bases line properties for all three components.
-    vizs.forEach(function (viz,i) {
-        viz.data(90)                       // Current value
+    //vizs.forEach(function (viz,i) {
+        viz1.data(90)                       // Current value
             .height(600)                    // Height of component - radius is calculated automatically for us
             .min(0)                         // min value
             .max(100)                       // max value
@@ -81,7 +81,7 @@ function initialize() {
             .on("mouseover",onMouseOver)    // mouseover callback - all viz components issue these events
             .on("mouseout",onMouseOut)      // mouseout callback - all viz components issue these events
             .on("click",onClick);           // mouseout callback - all viz components issue these events
-    })
+    //})
 
     //
     // Now we set some unique properties for all three components to demonstrate the different settings.
@@ -180,7 +180,7 @@ function changeSize(val) {
 
 //This sets the same value for each radial progress
 function changeData(val) {
-    vizs.forEach(function (viz,i) {
-        vizs[i].data(Number(val)).update();
-    })
+    //vizs.forEach(function (viz,i) {
+        viz1.data(Number(val)).update();
+    //})
 }
