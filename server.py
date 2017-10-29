@@ -20,8 +20,16 @@ def background_stuff():
      while True:
          time.sleep(1)
          print("sleeping")
-         t = str(randint(1,100))
+         t = str(randint(40,90))
          socketio.emit('message', {'data': 'This is data', 'time': t}, namespace='/test')
+
+@app.route('/lib/<path:path>')
+def send_js(path):
+   return app.send_static_file('lib/'+path)
+
+@app.route('/styles/<path:path>')
+def send_styles(path):
+   return app.send_static_file('styles/'+path)
 
 @app.route('/')
 def index():
