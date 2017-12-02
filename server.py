@@ -8,12 +8,22 @@ import time
 from threading import Thread
 from flask import Flask, render_template, session, request
 from flask.ext.socketio import SocketIO, emit, join_room, disconnect
+import serial
 
 app = Flask(__name__)
 app.debug = True
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 thread = None
+ser = serial.Serial('/dev/tty.usbserial-141',9600)
+
+def loop_forever():
+    read_byte = ser.read(2)
+    socketio.emit('message', {'data': 'This is data', 'time': read_byte.decode('ascii')}, namespace='/test')
+    while read_byte is not None:
+	read_byte = ser.read(2)
+        socketio.emit('message', {'data': 'This is data', 'time': read_byte.decode('ascii')}, namespace='/test')
+	print read_byte.decode("ascii")
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -57,7 +67,7 @@ def index():
         thread.start()
     return app.send_static_file('index.html')
 
-mqttThread = Thread(target=client.loop_forever)
+mqttThread = Thread(target=loop_forever)
 mqttThread.start()
 
 
